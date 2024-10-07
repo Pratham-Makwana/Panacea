@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'DashboardScreen.dart';
+import '../../DashboardScreen.dart';
 import 'LoginScreen.dart';
 
 class RegisterScreen extends StatelessWidget {
