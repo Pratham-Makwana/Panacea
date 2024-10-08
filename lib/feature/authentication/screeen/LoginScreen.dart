@@ -1,18 +1,20 @@
+import 'package:cikitsakai/feature/authentication/controller/login_controller.dart';
+import 'package:cikitsakai/utills/validation/validation.dart';
 import 'package:flutter/material.dart';
-
-import '../../DashboardScreen.dart';
+import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'RegisterScreen.dart';
-import '../../main.dart';
+import '../../../main.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
+    final controller = Get.put(LoginController());
     mq = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: const Color(0xffffffff),
       body: Align(
         alignment: Alignment.center,
         child: Padding(
@@ -23,7 +25,7 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  "assets/MainImage.jpeg",
+                  "assets/image/MainImage.jpeg",
                   height: 100,
                   width: mq.width * .85,
                   fit: BoxFit.fitWidth,
@@ -55,56 +57,62 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
 
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
-                  child: TextField(
-                    controller: emailController,
-                    obscureText: false,
-                    textAlign: TextAlign.start,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontStyle: FontStyle.normal,
-                      fontSize: 16,
-                      color: Color(0xff000000),
-                    ),
-                    decoration: InputDecoration(
-                      disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(4.0),
-                        borderSide: const BorderSide(
-                            color: Color(0xff9e9e9e), width: 1),
-                      ),
-                      labelText: "Email",
-                      isDense: false,
-                      filled: true,
-                      fillColor: const Color(0x00f2f2f3),
-                      contentPadding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 12),
-                      labelStyle: const TextStyle(
+                /// --------------------- Form  ------------------------------
+                Form(
+                  key: controller.loginFormKey,
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
+                    child: TextFormField(
+                      controller: controller.email,
+                      validator: (value) => TValidator.validateEmail(value),
+                      obscureText: false,
+                      textAlign: TextAlign.start,
+                      maxLines: 1,
+                      style: const TextStyle(
                         fontWeight: FontWeight.w400,
                         fontStyle: FontStyle.normal,
                         fontSize: 16,
-                        color: Colors.black, //Color(0x00f2f2f3),
+                        color: Color(0xff000000),
+                      ),
+                      decoration: InputDecoration(
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: const BorderSide(
+                              color: Color(0xff9e9e9e), width: 1),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: const BorderSide(
+                              color: Color(0xff9e9e9e), width: 1),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(4.0),
+                          borderSide: const BorderSide(
+                              color: Color(0xff9e9e9e), width: 1),
+                        ),
+                        labelText: "Email",
+                        isDense: false,
+                        filled: true,
+                        fillColor: const Color(0x00f2f2f3),
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 12),
+                        labelStyle: const TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                          fontSize: 16,
+                          color: Colors.black, //Color(0x00f2f2f3),
+                        ),
                       ),
                     ),
                   ),
                 ),
 
                 /// -------------------------------------------------------
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
+                TextFormField(
+                  controller: controller.password,
+                  obscureText: controller.hidePassword.value,
+                  validator: (value) => TValidator.validatePassword(value),
                   textAlign: TextAlign.start,
                   maxLines: 1,
                   style: const TextStyle(
@@ -114,6 +122,11 @@ class LoginScreen extends StatelessWidget {
                     color: Color(0xff000000),
                   ),
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                        onPressed: () =>controller.hidePassword.value = !controller.hidePassword.value,
+                        icon: Icon(controller.hidePassword.value
+                            ? Iconsax.eye_slash
+                            : Iconsax.eye)),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
@@ -174,11 +187,7 @@ class LoginScreen extends StatelessWidget {
                         child: MaterialButton(
                           onPressed: () {
                             // Navigate to the RegisterScreen when the button is pressed
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const RegisterScreen()),
-                            );
+                            Get.to(()=> const RegisterScreen());
                           },
                           color: const Color(0xffffffff),
                           elevation: 0,
@@ -208,33 +217,33 @@ class LoginScreen extends StatelessWidget {
                         flex: 1,
                         child: MaterialButton(
                           onPressed: () {
-                            String email = 'admin';
-                            String password = 'admin';
-                            if (emailController.text == email &&
-                                passwordController.text == password) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => const DashboardScreen()));
-                            } else {
-                              // Shoe an error message or perform other actions if the credentials don't match
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: const Text('Invalid Credentials'),
-                                    content: const Text(
-                                        'Please enter valid email and password.'),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                          child: const Text('OK'))
-                                    ],
-                                  );
-                                },
-                              );
-                            }
+                            // String email = 'admin';
+                            // String password = 'admin';
+                            // if (emailController.text == email &&
+                            //     passwordController.text == password) {
+                            //   Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (_) => const DashboardScreen()));
+                            // } else {
+                            //   // Shoe an error message or perform other actions if the credentials don't match
+                            //   showDialog(
+                            //     context: context,
+                            //     builder: (context) {
+                            //       return AlertDialog(
+                            //         title: const Text('Invalid Credentials'),
+                            //         content: const Text(
+                            //             'Please enter valid email and password.'),
+                            //         actions: [
+                            //           TextButton(
+                            //               onPressed: () =>
+                            //                   Navigator.pop(context),
+                            //               child: const Text('OK'))
+                            //         ],
+                            //       );
+                            //     },
+                            //   );
+                            // }
                           },
                           color: const Color(0xff000310),
                           elevation: 0,
