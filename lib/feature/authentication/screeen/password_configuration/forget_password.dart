@@ -1,4 +1,4 @@
-import 'package:cikitsakai/feature/authentication/model/forget_password_controller.dart';
+import 'package:cikitsakai/feature/authentication/controller/forget_password_controller.dart';
 import 'package:cikitsakai/utills/constants/colors.dart';
 import 'package:cikitsakai/utills/constants/sizes.dart';
 import 'package:cikitsakai/utills/validation/validation.dart';
