@@ -25,23 +25,42 @@ class AuthenticationRepository extends GetxController {
   screenRedirect() async {
     final user = _auth.currentUser;
     if (user != null) {
+      // If the user is logged in
       if (user.emailVerified) {
+        // if the user email is verified ,navigate to DashBoard Screen
         Get.offAll(() => const DashboardScreen());
       } else {
+        // if the user email is not verified , navigate to the VerifyEmail Screen
         Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));
       }
     } else {
+      // If User is null Navigate to Login Screen
       Get.offAll(() => const LoginScreen());
+    }
+  }
+
+  /// LOGIN
+  Future<UserCredential> loginWithEmailAndPassword(String email, String password) async {
+    try {
+      return await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
     }
   }
 
   /// ---------- Registration
 
-  Future<UserCredential> registerWithEmailAndPassword(
-      String email, String password) async {
+  Future<UserCredential> registerWithEmailAndPassword(String email, String password) async {
     try {
-      return await _auth.createUserWithEmailAndPassword(
-          email: email, password: password);
+      return await _auth.createUserWithEmailAndPassword(email: email, password: password);
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

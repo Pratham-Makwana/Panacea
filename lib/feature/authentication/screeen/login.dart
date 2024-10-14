@@ -1,3 +1,4 @@
+import 'package:cikitsakai/feature/authentication/controller/login/login_controller.dart';
 import 'package:cikitsakai/utills/validation/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(LoginController());
     mq = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
@@ -57,94 +59,62 @@ class LoginScreen extends StatelessWidget {
 
                 /// --------------------- Form  ------------------------------
                 Form(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
-                    child: TextFormField(
-                      validator: (value) => TValidator.validateEmail(value),
-                      obscureText: false,
-                      textAlign: TextAlign.start,
-                      maxLines: 1,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                        fontSize: 16,
-                        color: Color(0xff000000),
-                      ),
-                      decoration: InputDecoration(
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(
-                              color: Color(0xff9e9e9e), width: 1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(
-                              color: Color(0xff9e9e9e), width: 1),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(4.0),
-                          borderSide: const BorderSide(
-                              color: Color(0xff9e9e9e), width: 1),
-                        ),
-                        labelText: "Email",
-                        isDense: false,
-                        filled: true,
-                        fillColor: const Color(0x00f2f2f3),
-                        contentPadding: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 12),
-                        labelStyle: const TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontSize: 16,
-                          color: Colors.black, //Color(0x00f2f2f3),
+                  key: controller.loginFormKey,
+                  child: Column(
+                    children: [
+                      /// --------------------- Email  ------------------------------
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 16, horizontal: 0),
+                        child: TextFormField(
+                          controller: controller.email,
+                          validator: (value) => TValidator.validateEmail(value),
+                          obscureText: false,
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                            color: Color(0xff000000),
+                          ),
+                          decoration: const InputDecoration(
+                            labelText: 'Email',
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 12),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                ),
 
-                /// -------------------------------------------------------
-                TextFormField(
-                  validator: (value) => TValidator.validatePassword(value),
-                  textAlign: TextAlign.start,
-                  maxLines: 1,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontSize: 16,
-                    color: Color(0xff000000),
-                  ),
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                        onPressed: () {}, icon: const Icon(Iconsax.eye)),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(color: Color(0xff9e9e9e), width: 1),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(color: Color(0xff9e9e9e), width: 1),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(4.0),
-                      borderSide:
-                          const BorderSide(color: Color(0xff9e9e9e), width: 1),
-                    ),
-                    labelText: "Password",
-                    isDense: false,
-                    filled: true,
-                    fillColor: const Color(0x00f2f2f3),
-                    contentPadding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    labelStyle: const TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal,
-                        fontSize: 16,
-                        color: Colors.black //Color(0x00f2f2f3),
+                      /// ------------------- Password -----------------------------------
+                      Obx(
+                        () => TextFormField(
+                          controller: controller.password,
+                          validator: (value) =>
+                              TValidator.validateEmptyText('Password', value),
+                          textAlign: TextAlign.start,
+                          maxLines: 1,
+                          obscureText: controller.hidePassword.value,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            fontSize: 16,
+                            color: Color(0xff000000),
+                          ),
+                          decoration: InputDecoration(
+                            suffixIcon: IconButton(
+                                onPressed: () => controller.hidePassword.value =
+                                    !controller.hidePassword.value,
+                                icon: Icon(controller.hidePassword.value
+                                    ? Iconsax.eye_slash
+                                    : Iconsax.eye)),
+                            labelText: "Password",
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 12),
+                          ),
                         ),
+                      ),
+                    ],
                   ),
                 ),
 
@@ -213,7 +183,7 @@ class LoginScreen extends StatelessWidget {
                       Expanded(
                         flex: 1,
                         child: MaterialButton(
-                          onPressed: () {},
+                          onPressed: () => controller.emailAndPasswordSignIn(),
                           color: const Color(0xff000310),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
