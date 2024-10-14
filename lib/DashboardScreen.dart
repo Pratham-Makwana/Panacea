@@ -1,4 +1,7 @@
+import 'package:cikitsakai/data/authentication/authentication_repo.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'ChatScreen.dart';
@@ -15,12 +18,8 @@ class DashboardScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
             children: [
               Stack(
-                alignment: Alignment.topLeft,
                 children: [
                   Container(
                     margin: const EdgeInsets.all(0),
@@ -35,51 +34,64 @@ class DashboardScreen extends StatelessWidget {
                           Border.all(color: const Color(0x4d9e9e9e), width: 1),
                     ),
                   ),
-                  const Column(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
                     children: [
                       Padding(
-                        padding: EdgeInsets.fromLTRB(16, 24, 16, 8),
+                        padding: const EdgeInsets.fromLTRB(16, 24, 16, 8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
+                            RichText(
+                              textAlign: TextAlign.start,
+                              text: const TextSpan(
+                                style: TextStyle(
+                                  letterSpacing: 1,
+                                ),
+                                children: [
+                                  TextSpan(
+                                    text: "Chikitsak",
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w700,
+                                        overflow: TextOverflow.clip,
+                                        fontStyle: FontStyle.normal,
+                                        color: Color(0xff020000)),
+                                  ),
+                                  TextSpan(
+                                    text: "Ai",
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w700,
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: 22,
+                                        color: Color(0xfffba808),
+                                        overflow: TextOverflow.clip),
+                                  ),
+                                ],
+                              ),
+                            ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.max,
                               children: [
-                                Text(
-                                  "Chikitsak",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 22,
-                                    color: Color(0xff020000),
+                                /// LogOut Button
+                                IconButton(
+                                  onPressed: () => AuthenticationRepository
+                                      .instance
+                                      .logout(),
+                                  icon: const Icon(
+                                    Iconsax.logout_14,
+                                    //Icons.logout_outlined,
+                                    color: Colors.black,
                                   ),
-                                ),
-                                Text(
-                                  "Ai",
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.clip,
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontStyle: FontStyle.normal,
-                                    fontSize: 22,
-                                    color: Color(0xfffba808),
-                                  ),
-                                ),
+                                )
                               ],
                             ),
                           ],
                         ),
                       ),
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.fromLTRB(16, 0, 16, 8),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -150,7 +162,7 @@ class DashboardScreen extends StatelessWidget {
                   children: [
                     ///***If you have exported images you must have to copy those images in assets/images directory.
                     Image.asset(
-                      "assets/pc.png",
+                      "assets/image/pc.png",
                       height: 140,
                       width: 140,
                       fit: BoxFit.contain,
@@ -234,7 +246,7 @@ class DashboardScreen extends StatelessWidget {
                                 ///***If you have exported images you must have to copy those images in assets/images directory.
 
                                 Image.asset(
-                              "assets/qna.jpg",
+                              "assets/image/qna.jpg",
                               // image: AssetImage("images/qna.jpg"),
                               height: 40,
                               width: 40,
@@ -296,7 +308,7 @@ class DashboardScreen extends StatelessWidget {
 
                                 ///***If you have exported images you must have to copy those images in assets/images directory.
                                 Image.asset(
-                              "assets/online.jpg",
+                              "assets/image/online.jpg",
                               height: 40,
                               width: 40,
                               fit: BoxFit.cover,
@@ -363,7 +375,7 @@ class DashboardScreen extends StatelessWidget {
 
                                 ///***If you have exported images you must have to copy those images in assets/images directory.
                                 Image.asset(
-                              "assets/doctorM.png",
+                              "assets/image/doctorM.png",
                               height: 40,
                               width: 40,
                               fit: BoxFit.cover,
