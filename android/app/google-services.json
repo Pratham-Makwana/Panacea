@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "4322333980",
+    "project_id": "chitishkaai",
+    "storage_bucket": "chitishkaai.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4322333980:android:6c8b6f2872df1fab8356d9",
+        "android_client_info": {
+          "package_name": "com.pratham.chilitsakai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUbiSTDuBgkGVoD8L6slVHT6sjZffdYt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:4322333980:android:ace20262fbe0e0c28356d9",
+        "android_client_info": {
+          "package_name": "com.pratham.cikitsakai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUbiSTDuBgkGVoD8L6slVHT6sjZffdYt4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

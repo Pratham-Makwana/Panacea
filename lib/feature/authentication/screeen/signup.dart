@@ -1,18 +1,17 @@
+import 'package:cikitsakai/feature/authentication/controller/signup/signup_controller.dart';
 import 'package:cikitsakai/utills/validation/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
-import '../../../DashboardScreen.dart';
-import '../controller/sign_controller.dart';
-import 'LoginScreen.dart';
+import 'login.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(SignController());
+    final controller = Get.put(SignupController());
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
       body: Align(
@@ -60,10 +59,13 @@ class RegisterScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                /// -------------- Form ------------------------
                 Form(
                   key: controller.signupFormKey,
                   child: Column(
                     children: [
+                      /// --------- Username
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                         child: TextFormField(
@@ -79,47 +81,20 @@ class RegisterScreen extends StatelessWidget {
                             fontSize: 16,
                             color: Color(0xff000000),
                           ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: const BorderSide(
-                                    color: Color(0xff9e9e9e), width: 1)),
-                            disabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                  color: Color(0xff9e9e9e), width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                  color: Color(0xff9e9e9e), width: 1),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                  color: Color(0xff9e9e9e), width: 1),
-                            ),
+                          decoration: const InputDecoration(
                             labelText: "Username",
-                            labelStyle: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16,
-                              color: Color(0xff9e9e9e),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0x00ffffff),
-                            isDense: false,
-                            contentPadding: const EdgeInsets.symmetric(
+                            contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 12),
                           ),
                         ),
                       ),
+
+                      /// -------------- Email
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                         child: TextFormField(
                           controller: controller.email,
-                          validator: (value) =>
-                              TValidator.validateEmail(value),
+                          validator: (value) => TValidator.validateEmail(value),
                           obscureText: false,
                           textAlign: TextAlign.start,
                           maxLines: 1,
@@ -129,46 +104,25 @@ class RegisterScreen extends StatelessWidget {
                             fontSize: 16,
                             color: Color(0xff000000),
                           ),
-                          decoration: InputDecoration(
-                            disabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                  color: Color(0xff9e9e9e), width: 1),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                  color: Color(0xff9e9e9e), width: 1),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                  color: Color(0xff9e9e9e), width: 1),
-                            ),
-                            labelText: "Email",
-                            labelStyle: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-                              fontSize: 16,
-                              color: Color(0xff9e9e9e),
-                            ),
-                            filled: true,
-                            fillColor: const Color(0x00ffffff),
-                            isDense: false,
-                            contentPadding: const EdgeInsets.symmetric(
+                          decoration: const InputDecoration(
+                            labelText: 'Email',
+                            contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 12),
                           ),
                         ),
                       ),
+
+                      /// ------------ Password
                       Obx(
                         () => Padding(
                           padding: const EdgeInsets.fromLTRB(0, 16, 0, 0),
                           child: TextFormField(
                             controller: controller.password,
-                            validator: (value) => TValidator.validatePassword(value),
-                            obscureText: controller.hiddenPassword.value,
+                            validator: (value) =>
+                                TValidator.validatePassword(value),
                             textAlign: TextAlign.start,
                             maxLines: 1,
+                            obscureText: controller.hidePassword.value,
                             style: const TextStyle(
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,
@@ -177,36 +131,12 @@ class RegisterScreen extends StatelessWidget {
                             ),
                             decoration: InputDecoration(
                               suffixIcon: IconButton(
-                                  onPressed: () => controller.hiddenPassword
-                                      .value = !controller.hiddenPassword.value,
-                                  icon: Icon(controller.hiddenPassword.value
+                                  onPressed: () => controller.hidePassword
+                                      .value = !controller.hidePassword.value,
+                                  icon: Icon(controller.hidePassword.value
                                       ? Iconsax.eye_slash
                                       : Iconsax.eye)),
-                              disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: Color(0xff9e9e9e), width: 1),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: Color(0xff9e9e9e), width: 1),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                                borderSide: const BorderSide(
-                                    color: Color(0xff9e9e9e), width: 1),
-                              ),
                               labelText: "Password",
-                              labelStyle: const TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 16,
-                                color: Color(0xff9e9e9e),
-                              ),
-                              filled: true,
-                              fillColor: const Color(0x00ffffff),
-                              isDense: false,
                               contentPadding: const EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 12),
                             ),
@@ -221,15 +151,16 @@ class RegisterScreen extends StatelessWidget {
                 ),
                 SizedBox(
                   width: double.infinity,
-                  child: MaterialButton(
-                    onPressed: () => controller.signUp(),
-                    color: const Color(0xff3a57e8),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    padding: const EdgeInsets.all(16),
-                    textColor: const Color(0xffffffff),
+                  child: ElevatedButton(
+                    onPressed: () => controller.signup(),
+                    style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(16),
+                        foregroundColor: const Color(0xffffffff),
+                        backgroundColor: const Color(0xff000310),
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        )),
                     child: const Text(
                       "Sign Up",
                       style: TextStyle(
@@ -253,12 +184,14 @@ class RegisterScreen extends StatelessWidget {
                     ),
                     TextButton(
                         onPressed: () {
-                          Get.to(()=> const LoginScreen());
+                          Get.to(() => const LoginScreen());
                         },
-                        child: Text(
+                        child: const Text(
                           'Login',
-                          style: TextStyle(color: Colors.blueAccent.shade700,
-                              fontSize: 20, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              color: Colors.cyan,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
                         )),
                   ],
                 ),

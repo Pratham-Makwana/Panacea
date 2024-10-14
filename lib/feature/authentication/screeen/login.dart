@@ -1,9 +1,8 @@
-import 'package:cikitsakai/feature/authentication/controller/login_controller.dart';
 import 'package:cikitsakai/utills/validation/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-import 'RegisterScreen.dart';
+import 'signup.dart';
 import '../../../main.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -11,7 +10,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginController());
     mq = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: const Color(0xffffffff),
@@ -59,12 +57,10 @@ class LoginScreen extends StatelessWidget {
 
                 /// --------------------- Form  ------------------------------
                 Form(
-                  key: controller.loginFormKey,
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(vertical: 16, horizontal: 0),
                     child: TextFormField(
-                      controller: controller.email,
                       validator: (value) => TValidator.validateEmail(value),
                       obscureText: false,
                       textAlign: TextAlign.start,
@@ -110,8 +106,6 @@ class LoginScreen extends StatelessWidget {
 
                 /// -------------------------------------------------------
                 TextFormField(
-                  controller: controller.password,
-                  obscureText: controller.hidePassword.value,
                   validator: (value) => TValidator.validatePassword(value),
                   textAlign: TextAlign.start,
                   maxLines: 1,
@@ -123,10 +117,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
-                        onPressed: () =>controller.hidePassword.value = !controller.hidePassword.value,
-                        icon: Icon(controller.hidePassword.value
-                            ? Iconsax.eye_slash
-                            : Iconsax.eye)),
+                        onPressed: () {}, icon: const Icon(Iconsax.eye)),
                     disabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(4.0),
                       borderSide:
@@ -158,19 +149,22 @@ class LoginScreen extends StatelessWidget {
                 ),
 
                 /// ----------------------------------------
-                const Padding(
-                  padding: EdgeInsets.fromLTRB(0, 8, 0, 0),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: Text(
-                      "Forget Password ?",
-                      textAlign: TextAlign.start,
-                      overflow: TextOverflow.clip,
-                      style: TextStyle(
-                          color: Color(0xff9e9e9e),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal),
+                    child: TextButton(
+                      onPressed: () => {},
+                      child: const Text(
+                        "Forget Password ?",
+                        textAlign: TextAlign.start,
+                        overflow: TextOverflow.clip,
+                        style: TextStyle(
+                            color: Color(0xff9e9e9e),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal),
+                      ),
                     ),
                   ),
                 ),
@@ -182,12 +176,13 @@ class LoginScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      /// Sign Up Button
                       Expanded(
                         flex: 1,
                         child: MaterialButton(
                           onPressed: () {
                             // Navigate to the RegisterScreen when the button is pressed
-                            Get.to(()=> const RegisterScreen());
+                            Get.to(() => const RegisterScreen());
                           },
                           color: const Color(0xffffffff),
                           elevation: 0,
@@ -213,38 +208,12 @@ class LoginScreen extends StatelessWidget {
                       const SizedBox(
                         width: 16,
                       ),
+
+                      /// Login Button
                       Expanded(
                         flex: 1,
                         child: MaterialButton(
-                          onPressed: () {
-                            // String email = 'admin';
-                            // String password = 'admin';
-                            // if (emailController.text == email &&
-                            //     passwordController.text == password) {
-                            //   Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (_) => const DashboardScreen()));
-                            // } else {
-                            //   // Shoe an error message or perform other actions if the credentials don't match
-                            //   showDialog(
-                            //     context: context,
-                            //     builder: (context) {
-                            //       return AlertDialog(
-                            //         title: const Text('Invalid Credentials'),
-                            //         content: const Text(
-                            //             'Please enter valid email and password.'),
-                            //         actions: [
-                            //           TextButton(
-                            //               onPressed: () =>
-                            //                   Navigator.pop(context),
-                            //               child: const Text('OK'))
-                            //         ],
-                            //       );
-                            //     },
-                            //   );
-                            // }
-                          },
+                          onPressed: () {},
                           color: const Color(0xff000310),
                           elevation: 0,
                           shape: RoundedRectangleBorder(
@@ -283,6 +252,8 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
+                /// Google Sign-In Button
                 Container(
                   margin: const EdgeInsets.all(0),
                   padding:

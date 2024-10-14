@@ -1,10 +1,7 @@
-import 'package:cikitsakai/feature/authentication/controller/verify_email_controller.dart';
-import 'package:cikitsakai/feature/authentication/repositiories/authentication_repository.dart';
 import 'package:cikitsakai/main.dart';
 import 'package:cikitsakai/utills/constants/image_string.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({super.key, required this.email});
@@ -13,16 +10,13 @@ class VerifyEmailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(VerifyEmailController());
     mq = MediaQuery.of(context).size;
     return Scaffold(
       // AppBar
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(onPressed: () {
-            AuthenticationRepository.instance.logout();
-          }, icon: const Icon(CupertinoIcons.clear))
+          IconButton(onPressed: () {}, icon: const Icon(CupertinoIcons.clear))
         ],
       ),
 
@@ -74,7 +68,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 width: double.infinity,
                 height: mq.height * .06,
                 child: ElevatedButton(
-                  onPressed: () => controller.checkMailVerificationStatus(),
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
                   child: const Text(
                     'Continue',
@@ -89,7 +83,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 width: double.infinity,
                 height: mq.height * .06,
                 child: ElevatedButton(
-                  onPressed: () => controller.sendEmailVerification(),
+                  onPressed: () {},
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.green),
                   child: const Text(
