@@ -224,42 +224,45 @@ class LoginScreen extends StatelessWidget {
                 ),
 
                 /// Google Sign-In Button
-                Container(
-                  margin: const EdgeInsets.all(0),
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                  decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(12.0),
-                      border:
-                          Border.all(color: const Color(0xff9e9e9e), width: 1)),
-                  child: const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image(
-                        image: NetworkImage(
-                            "https://cdn3.iconfinder.com/data/icons/logos-brands-3/24/logo_brand_brands_logos_google-256.png"),
-                        width: 25,
-                        height: 25,
-                        fit: BoxFit.cover,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
-                        child: Text(
-                          "Google",
-                          textAlign: TextAlign.start,
-                          overflow: TextOverflow.clip,
-                          style: TextStyle(
-                              color: Color(0xff000000),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal),
+                InkWell(
+                  onTap: () => controller.googleSignIn(),
+                  child: Container(
+                    margin: const EdgeInsets.all(0),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    decoration: BoxDecoration(
+                        color: const Color(0xffffffff),
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                            color: const Color(0xff9e9e9e), width: 1)),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image(
+                          image: NetworkImage(
+                              "https://cdn3.iconfinder.com/data/icons/logos-brands-3/24/logo_brand_brands_logos_google-256.png"),
+                          width: 25,
+                          height: 25,
+                          fit: BoxFit.cover,
                         ),
-                      )
-                    ],
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(16, 0, 0, 0),
+                          child: Text(
+                            "Google",
+                            textAlign: TextAlign.start,
+                            overflow: TextOverflow.clip,
+                            style: TextStyle(
+                                color: Color(0xff000000),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],
