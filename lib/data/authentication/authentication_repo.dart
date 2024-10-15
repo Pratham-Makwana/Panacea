@@ -18,7 +18,7 @@ class AuthenticationRepository extends GetxController {
 
   @override
   void onReady() {
-    FlutterNativeSplash.remove();
+    //  FlutterNativeSplash.remove();
     screenRedirect();
   }
 
@@ -34,10 +34,11 @@ class AuthenticationRepository extends GetxController {
         // if the user email is not verified , navigate to the VerifyEmail Screen
         Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));
       }
-    } else {
-      // If User is null Navigate to Login Screen
-      Get.offAll(() => const LoginScreen());
     }
+    // } else {
+    //   // If User is null Navigate to Login Screen
+    //   Get.offAll(() => const LoginScreen());
+    // }
   }
 
   /// LOGIN
@@ -79,10 +80,27 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  ///  Send Email Verification
+  ///  Mail Verification
   Future<void> sendEmailVerification() async {
     try {
       await _auth.currentUser?.sendEmailVerification();
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// Forget Password
+  Future<void> sendPasswordResetEmail(String email) async {
+    try {
+      await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {

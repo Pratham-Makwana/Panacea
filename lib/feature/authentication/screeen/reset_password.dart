@@ -1,81 +1,70 @@
-import 'package:cikitsakai/data/authentication/authentication_repo.dart';
-import 'package:cikitsakai/feature/authentication/controller/signup/verify_email_controller.dart';
-import 'package:cikitsakai/main.dart';
+import 'package:cikitsakai/feature/authentication/controller/forget_password/forget_password_controller.dart';
+import 'package:cikitsakai/feature/authentication/screeen/login.dart';
 import 'package:cikitsakai/utills/constants/image_string.dart';
+import 'package:cikitsakai/utills/constants/sizes.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class VerifyEmailScreen extends StatelessWidget {
-  const VerifyEmailScreen({super.key, required this.email});
+import '../../../main.dart';
 
-  final String? email;
+class ResetPasswordScreen extends StatelessWidget {
+  final String email;
+
+  const ResetPasswordScreen({super.key, required this.email});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(VerifyEmailController());
-    mq = MediaQuery.of(context).size;
     return Scaffold(
-      // AppBar
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-            /// LogOut
-            onPressed: () => AuthenticationRepository.instance.logout(),
-            icon: const Icon(CupertinoIcons.clear),
-          )
+              onPressed: () => Get.back(),
+              icon: const Icon(CupertinoIcons.clear))
         ],
       ),
-
-      //   Body
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
         child: Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.all(TSizes.defaultSpace),
           child: Column(
             children: [
               Image(
                 image: const AssetImage(TImages.deliveredEmailIllustration),
                 width: mq.width * 0.6,
               ),
-              const SizedBox(
-                height: 24,
-              ),
+              const SizedBox(height: TSizes.spaceBtwSection),
+
+              //   Title
               Text(
-                'Verify your email address!',
-                style: Theme.of(context).textTheme.headlineSmall,
+                email,
+                style: Theme.of(context).textTheme.bodyMedium,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: TSizes.spaceBtwItems),
+              Text(
+                'Password Reset Email Sent',
+                style: Theme.of(context).textTheme.headlineMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
-                height: 16,
+                height: TSizes.spaceBtwItems,
               ),
               Text(
-                email ?? '',
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 1,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Text(
-                "Congratulations! Your Account Awaits: Verify Your Email to Start Shopping and Experience a World of Unrivaled Deals and Personalized Offers.",
+                "Your Account Security is Our Priority! We've Sent You a Secure Link to Safely Change Your Password and Keep Your Account Protected.",
                 style: Theme.of(context).textTheme.labelMedium,
                 textAlign: TextAlign.center,
               ),
               const SizedBox(
-                height: 16,
+                height: TSizes.spaceBtwSection,
               ),
 
-              /// Button
+              /// Continue Button
               SizedBox(
                 width: double.infinity,
+                //height: mq.height * .06,
                 child: ElevatedButton(
-                  onPressed: () => controller.checkEmailVerificationStatus(),
+                  onPressed: () => Get.offAll(() => const LoginScreen()),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff000310),
                     elevation: 0,
@@ -99,29 +88,31 @@ class VerifyEmailScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 16,
+                height: TSizes.spaceBtwItems,
               ),
+
+              /// Resend Email Button
               SizedBox(
                 width: double.infinity,
-                height: mq.height * .06,
-                child: ElevatedButton(
-                  onPressed: () => controller.sendEmailVerification(),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
+                child: MaterialButton(
+                  onPressed: () => ForgetPasswordController.instance
+                      .resendPasswordEmailReset(email),
+                  color: const Color(0xffffffff),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
                       side:
                           const BorderSide(color: Color(0xff9e9e9e), width: 1),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(12.0)),
+                  textColor: const Color(0xff000000),
+                  child: const Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      "Resend Email",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal),
                     ),
-                  ),
-                  child: const Text(
-                    'Resend',
-                    style: TextStyle(
-                        color: Color(0xffffffff),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        fontStyle: FontStyle.normal),
                   ),
                 ),
               ),

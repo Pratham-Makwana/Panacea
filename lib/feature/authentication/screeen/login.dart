@@ -1,4 +1,6 @@
 import 'package:cikitsakai/feature/authentication/controller/login/login_controller.dart';
+import 'package:cikitsakai/feature/authentication/screeen/forget_password.dart';
+import 'package:cikitsakai/feature/authentication/screeen/reset_password.dart';
 import 'package:cikitsakai/utills/validation/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -124,7 +126,7 @@ class LoginScreen extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () => {},
+                      onPressed: () => Get.to(() => const ForgetPassword()),
                       child: const Text(
                         "Forget Password ?",
                         textAlign: TextAlign.start,
