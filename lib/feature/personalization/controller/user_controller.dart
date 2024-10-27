@@ -8,6 +8,8 @@ import '../../authentication/model/user_model.dart';
 class UserController extends GetxController {
   static UserController get instance => Get.find();
 
+  Rx<UserModel> user = UserModel.empty().obs;
+
   final userRepository = Get.put(UserRepository());
 
   // Save User Record from any Registration Provider (Google,Facebook)

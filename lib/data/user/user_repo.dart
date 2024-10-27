@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cikitsakai/data/authentication/authentication_repo.dart';
 import 'package:cikitsakai/feature/authentication/model/user_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,6 +31,26 @@ class UserRepository extends GetxController {
       throw TPlatformException(e.code).message;
     } catch (e) {
       log('saveUserRecordE $e');
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  /// Function update any field in specific user collection
+  Future<void> updateSingleField(Map<String, dynamic> json) async {
+    try {
+      _db
+          .collection('Users')
+          .doc(AuthenticationRepository.instance.authUser?.uid)
+          .update(json);
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
       throw 'Something went wrong. Please try again';
     }
   }
