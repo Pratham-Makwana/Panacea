@@ -1,6 +1,7 @@
 import 'package:cikitsakai/DashboardScreen.dart';
 import 'package:cikitsakai/feature/authentication/screeen/login.dart';
 import 'package:cikitsakai/feature/authentication/screeen/verify_email.dart';
+import 'package:cikitsakai/navigation_menu.dart';
 import 'package:cikitsakai/utills/exceptions/firebase_auth_exception.dart';
 import 'package:cikitsakai/utills/exceptions/firebase_exceptions.dart';
 import 'package:cikitsakai/utills/exceptions/format_exceptions.dart';
@@ -16,6 +17,9 @@ class AuthenticationRepository extends GetxController {
 
   final _auth = FirebaseAuth.instance;
 
+  /// Get Authenticated User Data
+  User? get authUser => _auth.currentUser;
+
   @override
   void onReady() {
     //  FlutterNativeSplash.remove();
@@ -29,7 +33,7 @@ class AuthenticationRepository extends GetxController {
       // If the user is logged in
       if (user.emailVerified) {
         // if the user email is verified ,navigate to DashBoard Screen
-        Get.offAll(() => const DashboardScreen());
+        Get.offAll(() => const NavigationMenu());
       } else {
         // if the user email is not verified , navigate to the VerifyEmail Screen
         Get.offAll(() => VerifyEmailScreen(email: _auth.currentUser?.email));

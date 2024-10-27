@@ -82,8 +82,10 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       appBar: AppBar(
         title: const Text('Chikitsak.AI'),
+        backgroundColor:  const Color.fromARGB(255, 255, 255, 255),
       ),
       body: Column(
         children: <Widget>[
